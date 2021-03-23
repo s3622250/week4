@@ -18,6 +18,12 @@ jobs:
           name: run tests
           command: |
             npm run unit-tests
+  intergration-test:
+    docker:
+      - image: circleci/node:lts
+      - image: mongo:4.0
+    enviroment:
+      APP_PORT: 4000
   pack:
     docker:
       - image: circleci/node:lts
@@ -33,6 +39,7 @@ workflows:
   build-and-packge:
     jobs:
       - ci-build
+      - intergration-test
       - pack:
           requires:
             - ci-build
