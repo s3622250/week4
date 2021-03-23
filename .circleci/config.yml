@@ -26,6 +26,7 @@ jobs:
       APP_PORT: 4000
     steps:
       - checkout
+      - install_deps
   pack:
     docker:
       - image: circleci/node:lts
