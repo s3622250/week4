@@ -40,7 +40,7 @@ jobs:
       - run: 
           name: Run NodeJsScan
           command: |
-            nodejsscan -d ./
+            nodejsscan -d ./ -o sast-output.json
   pack:
     docker:
       - image: circleci/node:lts
