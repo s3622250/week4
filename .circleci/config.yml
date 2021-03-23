@@ -60,7 +60,7 @@ workflows:
           requires:
             - ci-build
       - sast:
-          require:
+          requires:
             - ci-build
       - pack:
           requires:
