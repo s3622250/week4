@@ -24,6 +24,8 @@ jobs:
       - image: mongo:4.0
     environment:
       APP_PORT: 4000
+    steps:
+      - checkout
   pack:
     docker:
       - image: circleci/node:lts
@@ -39,7 +41,9 @@ workflows:
   build-and-packge:
     jobs:
       - ci-build
-      - intergration-test
+      - intergration-test:
+          requires:
+            - ci-build
       - pack:
           requires:
             - ci-build
