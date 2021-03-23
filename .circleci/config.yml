@@ -18,6 +18,29 @@ jobs:
           name: run tests
           command: |
             npm run unit-tests
+  intergration-test:
+    docker:
+      - image: circleci/node:lts
+      - image: mongo:4.0
+    environment:
+      APP_PORT: 4000
+    steps:
+      - checkout
+  sast:
+    docker:
+      - image: circleci/node:lts
+    steps:
+      - checkout
+      - run: Install NodeJsScan
+          command: |
+            sudo apt update
+            sudo apt install python3-pip
+            pip3 install nodejsscan
+      - run: Run NodeJsScan
+          command: |
+            nodejsscan -d ./
+
+
   pack:
     docker:
       - image: circleci/node:lts
@@ -33,6 +56,12 @@ workflows:
   build-and-packge:
     jobs:
       - ci-build
+      - intergration-test:
+          requires:
+            - ci-build
+      - sast:
+          require:
+            - ci-build
       - pack:
           requires:
             - ci-build
