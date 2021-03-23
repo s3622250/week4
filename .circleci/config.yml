@@ -41,6 +41,11 @@ jobs:
           name: Run NodeJsScan
           command: |
             nodejsscan -d ./ -o sast-output.json
+      - store_artifacts: sast-output.json
+      - run:
+          name: Parse sast report
+          command: |
+            exit $(cat sast-output.json | jq .total_count.sec)
   pack:
     docker:
       - image: circleci/node:lts
