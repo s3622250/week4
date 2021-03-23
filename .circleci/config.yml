@@ -24,9 +24,6 @@ jobs:
       - image: mongo:4.0
     environment:
       APP_PORT: 4000
-    steps:
-      - checkout
-      - install_deps
   pack:
     docker:
       - image: circleci/node:lts
